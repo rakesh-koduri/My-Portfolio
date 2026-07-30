@@ -293,10 +293,10 @@ section {
 }
 
 /* Skill-specific widths */
-.html { width: 90%; }
-.css { width: 85%; }
-.responsive { width: 80%; }
-.animations { width: 75%; }  
+.html { width: 95%; }
+.css { width: 88%; }
+.responsive { width: 85%; }
+.animations { width: 80%; }  
 
 .certifications-container {
     display: flex;
