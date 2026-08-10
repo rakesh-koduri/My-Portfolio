@@ -458,31 +458,128 @@ footer .btn:hover {
     color: #00d4ff;
 }  
 
-/* Responsive */
+/* ========================================= */
+/* MOBILE HAMBURGER MENU */
+/* ========================================= */
 
-/* Base (Desktop/Laptop) */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-    }
-    nav a {
-        display: block;
-        margin: 10px 0;
-    }
+#menu-toggle {
+    display: none;
 }
 
-/* iPad Mini (768px and below) */
+.menu-icon {
+    display: none;
+}
+
+
+/* ========================================= */
+/* MOBILE - 768px AND BELOW */
+/* ========================================= */
+
 @media (max-width: 768px) {
+
+    /* Mobile header should scroll away */
     header {
-        flex-direction: column;
-        text-align: center;
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 15px 20px;
     }
 
+    /* Remove desktop fixed-header space */
+    body {
+        padding-top: 0;
+    }
+
+    /* Hide normal menu */
+    nav {
+        display: none;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        width: 100%;
+
+        background: #222;
+
+        text-align: center;
+
+        padding: 10px 0 15px;
+
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Show menu when hamburger is clicked */
+    #menu-toggle:checked ~ nav {
+        display: block;
+    }
+
+    /* Mobile menu links */
     nav a {
         display: block;
-        margin: 10px 0;
+
+        margin: 0;
+
+        padding: 12px 0;
+
+        color: white;
+
+        font-size: 18px;
     }
 
+    nav a:hover {
+        background: #333;
+    }
+
+    /* Hamburger icon */
+    .menu-icon {
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: space-between;
+
+        width: 30px;
+        height: 24px;
+
+        cursor: pointer;
+
+        margin-left: 10px;
+    }
+
+    .menu-icon span {
+        display: block;
+
+        width: 30px;
+        height: 3px;
+
+        background: white;
+
+        border-radius: 5px;
+
+        transition: 0.3s ease;
+    }
+
+    /* Hamburger becomes X */
+    #menu-toggle:checked + .menu-icon span:nth-child(1) {
+        transform: translateY(10.5px) rotate(45deg);
+    }
+
+    #menu-toggle:checked + .menu-icon span:nth-child(2) {
+        opacity: 0;
+    }
+
+    #menu-toggle:checked + .menu-icon span:nth-child(3) {
+        transform: translateY(-10.5px) rotate(-45deg);
+    }
+
+    /* Projects and certifications */
     .projects-container,
     .certifications-container {
         flex-direction: column;
@@ -492,45 +589,80 @@ footer .btn:hover {
     .project-card,
     .card {
         width: 90%;
+        max-width: 350px;
     }
-}
-  
-/* Samsung Galaxy S8+ (360px and below) */
-@media (max-width: 480px) {
-    body {
-      font-size: 14px;
+
+    /* Home text */
+    #home h1 {
+        font-size: 2rem;
     }
-  
-    header {
-      padding: 15px;
+
+    #home p {
+        font-size: 1.1rem;
     }
-  
-    .btn {
-      padding: 10px 15px;
-      font-size: 0.9rem;
-    }
-  
-    .profile-img {
-      width: 120px;
-    }
-  
-    .contact-form {
-      padding: 0 10px;
-    }
-  
-    .progress-bar {
-      height: 16px;
-    }
-  
+
+    /* Mobile toggle */
     .toggle-switch {
-      width: 40px;
-      height: 20px;
+        width: 40px;
+        height: 20px;
+
+        margin-left: auto;
+        margin-right: 10px;
     }
-  
+
     .toggle-switch::before {
-      width: 18px;
-      height: 18px;
+        width: 18px;
+        height: 18px;
+
+        top: 1px;
+        left: 1px;
+    }
+
+    #mode-toggle:checked + .toggle-switch::before {
+        transform: translateX(20px);
     }
 }
-  
-  
+
+
+/* ========================================= */
+/* SMALL MOBILE - 480px AND BELOW */
+/* ========================================= */
+
+@media (max-width: 480px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .contact-form {
+        padding: 0 10px;
+    }
+
+    .progress-bar {
+        height: 16px;
+    }
+
+    .menu-icon {
+        width: 28px;
+        height: 22px;
+    }
+
+    .menu-icon span {
+        width: 28px;
+        height: 3px;
+    }
+}
