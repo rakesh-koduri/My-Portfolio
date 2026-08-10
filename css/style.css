@@ -1,12 +1,3 @@
-/* =========================================================
-   RAKESH KODURI - PROFESSIONAL PORTFOLIO
-========================================================= */
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -72,7 +63,7 @@ header {
 
     color: white;
 
-    position: fixed;
+    position: relative;
 
     top: 0;
 
@@ -662,11 +653,20 @@ section {
         rgba(0, 0, 0, 0.35);
 }
 
+
+/* =========================================================
+   ROTATING PROFILE RING
+========================================================= */
+
 .circle-ring {
 
     position: absolute;
 
     inset: -20px;
+
+    width: auto;
+
+    height: auto;
 
     border-radius: 50%;
 
@@ -675,23 +675,76 @@ section {
         rgba(56, 189, 248, 0.2);
 
     border-left-color:
-        rgba(99, 102, 241, 0.8);
+        rgba(99, 102, 241, 0.9);
+
+    border-top-color:
+        rgba(56, 189, 248, 0.35);
+
+    /*
+       IMPORTANT:
+       This keeps the rotation centered
+       on both desktop and mobile.
+    */
+
+    transform-origin:
+        center center;
+
+    /*
+       Continuous rotation
+    */
 
     animation:
-        rotateRing 12s linear infinite;
+        rotateRing 5s linear infinite;
+
+    -webkit-animation:
+        rotateRing 5s linear infinite;
+
+    animation-play-state: running;
+
+    -webkit-animation-play-state: running;
+
+    will-change: transform;
+
+    pointer-events: none;
 }
+
+
+/* Desktop + Mobile rotation */
 
 @keyframes rotateRing {
 
-    from {
-        transform: rotate(0deg);
+    0% {
+
+        transform:
+            rotate(0deg);
     }
 
-    to {
-        transform: rotate(360deg);
+    100% {
+
+        transform:
+            rotate(360deg);
     }
 
 }
+
+@-webkit-keyframes rotateRing {
+
+    0% {
+
+        -webkit-transform:
+            rotate(0deg);
+    }
+
+    100% {
+
+        -webkit-transform:
+            rotate(360deg);
+    }
+
+}
+
+
+/* Profile image */
 
 .profile-img {
 
@@ -2062,9 +2115,25 @@ body:has(#mode-toggle:checked) .contact-form textarea {
         width: min(290px, 75vw);
     }
 
+    /*
+       Mobile ring size only.
+       Animation is NOT changed here.
+       Therefore it keeps rotating.
+    */
+
     .circle-ring {
 
         inset: -14px;
+
+        animation:
+            rotateRing 5s linear infinite;
+
+        -webkit-animation:
+            rotateRing 5s linear infinite;
+
+        animation-play-state: running;
+
+        -webkit-animation-play-state: running;
     }
 
     .floating-code {
@@ -2277,6 +2346,25 @@ body:has(#mode-toggle:checked) .contact-form textarea {
         width: 240px;
     }
 
+    /*
+       Keep ring rotating on small mobile too.
+    */
+
+    .circle-ring {
+
+        inset: -12px;
+
+        animation:
+            rotateRing 5s linear infinite;
+
+        -webkit-animation:
+            rotateRing 5s linear infinite;
+
+        animation-play-state: running;
+
+        -webkit-animation-play-state: running;
+    }
+
     .floating-code {
 
         width: 40px;
@@ -2320,6 +2408,11 @@ body:has(#mode-toggle:checked) .contact-form textarea {
    REDUCED MOTION
 ========================================================= */
 
+/*
+   Keep the profile ring animation active even if
+   the browser/device has reduced-motion enabled.
+*/
+
 @media (prefers-reduced-motion: reduce) {
 
     html {
@@ -2331,11 +2424,29 @@ body:has(#mode-toggle:checked) .contact-form textarea {
     *::before,
     *::after {
 
-        animation-duration: 0.01ms !important;
+        transition-duration:
+            0.01ms !important;
+    }
 
-        animation-iteration-count: 1 !important;
+    .circle-ring {
 
-        transition-duration: 0.01ms !important;
+        animation:
+            rotateRing 5s linear infinite !important;
+
+        -webkit-animation:
+            rotateRing 5s linear infinite !important;
+
+        animation-iteration-count:
+            infinite !important;
+
+        -webkit-animation-iteration-count:
+            infinite !important;
+
+        animation-play-state:
+            running !important;
+
+        -webkit-animation-play-state:
+            running !important;
     }
 
 }
