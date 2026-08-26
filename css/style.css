@@ -352,17 +352,12 @@ section {
 
 
 /* =========================================================
-   BUTTONS — ANIMATED ROTATING BORDER
+   BUTTON
 ========================================================= */
-
-@property --button-angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
 
 .btn {
     position: relative;
+    isolation: isolate;
 
     display: inline-flex;
     align-items: center;
@@ -372,55 +367,84 @@ section {
     padding: 12px 21px;
     border-radius: 10px;
 
-    color: #ffffff;
+    color: white;
     font-size: 0.88rem;
     font-weight: 700;
 
     border: 1px solid transparent;
 
-    /*
-       Dark inner background + animated conic-gradient border.
-       The rotating blue/purple light is now clearly visible.
-    */
-    background:
-        linear-gradient(#0b1728, #0b1728) padding-box,
-        conic-gradient(
-            from var(--button-angle),
-            #0b1728 0deg,
-            #0b1728 245deg,
-            #38bdf8 285deg,
-            #6366f1 315deg,
-            #a855f7 330deg,
-            #0b1728 360deg
-        ) border-box;
-
-    animation:
-        rotateButtonBorder 2.5s linear infinite;
+    /* Dark base + red fill that grows from bottom */
+    background-color: #0b1728;
+    background-image: linear-gradient(#ef4444, #ef4444);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 100% 0%;
 
     transition:
+        background-size 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.25s ease,
         transform 0.25s ease,
         box-shadow 0.25s ease;
 }
 
+/* Moving blue/purple light around the border */
+
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+
+    border-radius: inherit;
+    padding: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #38bdf8,
+        #a855f7,
+        #38bdf8,
+        transparent
+    );
+
+    background-size: 300% 100%;
+
+    animation: buttonBorderMove 3s linear infinite;
+
+    z-index: -1;
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+/* Smooth bottom-to-top red fill */
+
 .btn:hover {
+    background-size: 100% 100%;
+    color: #ffffff;
+
     transform: translateY(-3px);
 
     box-shadow:
-        0 0 20px rgba(56, 189, 248, 0.22),
-        0 12px 30px rgba(56, 189, 248, 0.14);
+        0 8px 25px rgba(239, 68, 68, 0.22);
 }
 
-@keyframes rotateButtonBorder {
+/* Moving border animation */
 
-    from {
-        --button-angle: 0deg;
+@keyframes buttonBorderMove {
+
+    0% {
+        background-position: 0% 50%;
     }
 
-    to {
-        --button-angle: 360deg;
+    100% {
+        background-position: 300% 50%;
     }
-
 }
+
 /* =========================================================
    HOME
 ========================================================= */
@@ -560,48 +584,24 @@ section {
     margin-bottom: 25px;
 }
 
-.primary-btn,
+.primary-btn {
+
+    color: #03121e;
+}
+
 .resume-btn {
-
-    color: #ffffff;
-
-    /*
-       Keep both buttons dark inside so the animated
-       border is clearly visible.
-    */
-
-    background:
-        linear-gradient(#0b1728, #0b1728) padding-box,
-        conic-gradient(
-            from var(--button-angle),
-            #0b1728 0deg,
-            #0b1728 245deg,
-            #38bdf8 285deg,
-            #6366f1 315deg,
-            #a855f7 330deg,
-            #0b1728 360deg
-        ) border-box;
-
+    background-color: #0b1728;
+    background-image: linear-gradient(#ef4444, #ef4444);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 100% 0%;
     border: 1px solid transparent;
 }
 
 .resume-btn:hover {
-
-    background:
-        linear-gradient(#0f1d30, #0f1d30) padding-box,
-        conic-gradient(
-            from var(--button-angle),
-            #0f1d30 0deg,
-            #0f1d30 245deg,
-            #38bdf8 285deg,
-            #6366f1 315deg,
-            #a855f7 330deg,
-            #0f1d30 360deg
-        ) border-box;
-
-    box-shadow:
-        0 0 20px rgba(56, 189, 248, 0.22),
-        0 12px 30px rgba(56, 189, 248, 0.14);
+    background-color: #0b1728;
+    background-size: 100% 100%;
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.22);
 }
 
 
@@ -2444,6 +2444,54 @@ body:has(#mode-toggle:checked) .contact-form textarea {
 
 
 /* =========================================================
+   RED FILL FOR SOCIAL LINKS
+   Bottom -> Top on hover
+========================================================= */
+
+.social-icons a,
+.social-icons-footer a {
+    background-color: transparent;
+    background-image: linear-gradient(#ef4444, #ef4444);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 100% 0%;
+    transition:
+        background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.social-icons a:hover,
+.social-icons-footer a:hover {
+    background-size: 100% 100%;
+    color: #ffffff;
+    border-color: #ef4444;
+    transform: translateY(-3px);
+}
+
+
+
+/* =========================================================
+   CENTER ALIGNMENT
+   Keep Skills, Certifications and Projects centered
+========================================================= */
+
+.skills-container,
+.certifications-container,
+.projects-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-title {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================================================
    REDUCED MOTION
 ========================================================= */
 
@@ -2488,4 +2536,19 @@ body:has(#mode-toggle:checked) .contact-form textarea {
             running !important;
     }
 
+}
+/* Fix View My Projects text visibility */
+.home-buttons .primary-btn {
+    color: #ffffff !important;
+}
+
+.home-buttons .primary-btn i {
+    color: #ffffff !important;
+}
+
+/* Keep text visible above the animated fill */
+.home-buttons .primary-btn,
+.home-buttons .primary-btn i {
+    position: relative;
+    z-index: 5;
 }
