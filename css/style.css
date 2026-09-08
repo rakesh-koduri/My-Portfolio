@@ -2557,3 +2557,66 @@ body:has(#mode-toggle:checked) .contact-form textarea {
     position: relative;
     z-index: 5;
 }
+
+
+/* =========================================================
+   PROJECT CARDS - SMOOTH VIDEO-STYLE MOVEMENT
+   Added without changing the existing project-card styles
+========================================================= */
+
+@keyframes projectCardMove {
+
+    0%,
+    100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: -10px 0;
+    }
+}
+
+/* Desktop / tablet: subtle left-right movement */
+.projects-container .project-card {
+    animation:
+        projectCardMove 5.5s ease-in-out infinite;
+}
+
+/* Stagger each card so they do not move together */
+.projects-container .project-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.projects-container .project-card:nth-child(2) {
+    animation-delay: 0.35s;
+}
+
+.projects-container .project-card:nth-child(3) {
+    animation-delay: 0.7s;
+}
+
+.projects-container .project-card:nth-child(4) {
+    animation-delay: 1.05s;
+}
+
+.projects-container .project-card:nth-child(5) {
+    animation-delay: 1.4s;
+}
+
+.projects-container .project-card:nth-child(6) {
+    animation-delay: 1.75s;
+}
+
+/* Pause movement while the recruiter interacts with a card */
+.projects-container .project-card:hover {
+    animation-play-state: paused;
+}
+
+/* Keep movement gentle on mobile */
+@media (max-width: 768px) {
+
+    .projects-container .project-card {
+        animation-duration: 6s;
+    }
+}
+
